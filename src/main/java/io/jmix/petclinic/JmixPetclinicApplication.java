@@ -2,9 +2,7 @@ package io.jmix.petclinic;
 
 import com.google.common.base.Strings;
 import io.jmix.core.repository.EnableJmixDataRepositories;
-import io.jmix.petclinic.app.visit.VisitLogRepository;
 import org.slf4j.LoggerFactory;
-import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
