@@ -5,6 +5,7 @@ import io.jmix.core.Messages;
 import io.jmix.core.TimeSource;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
 import io.jmix.core.security.CurrentAuthentication;
+import io.jmix.petclinic.app.visit.VisitLog;
 import io.jmix.petclinic.entity.visit.Visit;
 import io.jmix.petclinic.entity.visit.VisitType;
 import io.jmix.petclinic.screen.visit.calendar.CalendarMode;
@@ -12,12 +13,15 @@ import io.jmix.petclinic.screen.visit.calendar.CalendarNavigationMode;
 import io.jmix.petclinic.screen.visit.calendar.CalendarNavigators;
 import io.jmix.petclinic.screen.visit.calendar.CalendarScreenAdjustment;
 import io.jmix.petclinic.screen.visit.calendar.VisitTypeIcon;
+import io.jmix.petclinic.screen.visit.visitlog.VisitLogBrowse;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.ScreenBuilders;
+import io.jmix.ui.action.Action;
 import io.jmix.ui.component.Button;
 import io.jmix.ui.component.Calendar;
 import io.jmix.ui.component.CheckBoxGroup;
 import io.jmix.ui.component.DatePicker;
+import io.jmix.ui.component.GroupTable;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.Label;
 import io.jmix.ui.component.RadioButtonGroup;
@@ -53,7 +57,6 @@ import static io.jmix.petclinic.screen.visit.calendar.RelativeDates.startOfWeek;
 @Route(value = "visits")
 public class VisitBrowse extends StandardLookup<Visit> {
 
-
     @Autowired
     protected Calendar<LocalDateTime> calendar;
     @Autowired
@@ -88,6 +91,8 @@ public class VisitBrowse extends StandardLookup<Visit> {
     protected MessageBundle messageBundle;
     @Autowired
     protected Messages messages;
+    @Autowired
+    private GroupTable<Visit> visitsTable;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -290,5 +295,17 @@ public class VisitBrowse extends StandardLookup<Visit> {
                         )
                 )
                 .show();
+    }
+
+    @Subscribe("visitsTable.visitLog")
+    public void onVisitsTableVisitLog(Action.ActionPerformedEvent event) {
+        final VisitLogBrowse visitLogBrowse = screenBuilders.lookup(VisitLog.class, this)
+                .withScreenClass(VisitLogBrowse.class)
+                .withOpenMode(OpenMode.DIALOG)
+                .build();
+
+        visitLogBrowse.setVisit(visitsTable.getSingleSelected());
+
+        visitLogBrowse.show();
     }
 }

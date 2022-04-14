@@ -1,6 +1,7 @@
 package io.jmix.petclinic;
 
 import com.google.common.base.Strings;
+import io.jmix.core.repository.EnableJmixDataRepositories;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +19,7 @@ import javax.sql.DataSource;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
+@EnableJmixDataRepositories("io.jmix.petclinic.repository")
 public class JmixPetclinicApplication {
 
 	@Autowired

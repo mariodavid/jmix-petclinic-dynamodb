@@ -1,12 +1,12 @@
 plugins {
-    id 'io.jmix' version '1.1.4'
+    id 'io.jmix' version '1.2.0'
     id 'java'
 }
 
 apply plugin: 'org.springframework.boot'
 
 jmix {
-    bomVersion = '1.1.2'
+    bomVersion = '1.2.2'
     projectId = 'petclinic'
 }
 
@@ -35,6 +35,7 @@ dependencies {
     implementation 'io.jmix.localfs:jmix-localfs-starter'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.github.derjust:spring-data-dynamodb:5.1.0'
 
     runtimeOnly 'org.hsqldb:hsqldb'
 
@@ -55,6 +56,8 @@ dependencies {
 
 
     testImplementation 'io.jmix.ui:jmix-ui-test-assist'
+
+
 }
 
 test {

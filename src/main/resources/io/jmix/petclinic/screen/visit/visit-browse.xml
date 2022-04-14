@@ -165,6 +165,7 @@
                             </properties>
                         </action>
                         <action id="remove" type="remove"/>
+                        <action id="visitLog" icon="LIST_ALT" caption="msg://visitLog" trackSelection="true"/>
                     </actions>
                     <columns>
                         <column id="pet"/>
@@ -181,6 +182,7 @@
                         <button id="createBtn" action="visitsTable.create"/>
                         <button id="editBtn" action="visitsTable.edit"/>
                         <button id="removeBtn" action="visitsTable.remove" stylename="danger"/>
+                        <button id="visitLogBtn" action="visitsTable.visitLog" />
                     </buttonsPanel>
                 </groupTable>
             </tab>
