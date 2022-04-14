@@ -29,7 +29,6 @@ dependencies {
 To define the DynamoDB beans that should be used, create a DynamoDBConfig class in your application like this:
 
 ```java
-
 @Configuration
 @EnableDynamoDBRepositories(basePackageClasses = VisitLogRepository.class)
 public class DynamoDBConfig {
@@ -62,7 +61,6 @@ Now let's create a DTO entity for the Visit log. Use the annotation from dynamod
 and which properties are considered to be the hash key:
 
 ````java
-
 @DynamoDBTable(tableName = "visit-log")
 @JmixEntity(name = "petclinic_VisitLog", annotatedPropertiesOnly = true)
 public class VisitLog {
@@ -136,9 +134,31 @@ public interface VisitLogRepository extends CrudRepository<VisitLog, UUID> {
 }
 ```
 
+
+It is necessary to not let the Jmix Spring Data integration interfere with the DynamoDB Spring Data repositories.
+We can achieve that by limiting the JmixDataRepositories to the subpackage: `repository`. The `VisitLogRepository` is _not_ located
+in this package. With that it will not be recognised by the Jmix Spring Data implementation.
+
+````java
+@EnableJmixDataRepositories("io.jmix.petclinic.repository")
+public class JmixPetclinicApplication {
+    
+}
+````
+
+To activate the VisitLogRepository, we need to annotate our `DynamoDBConfig` to enable scanning and mention `VisitLogRepository` class:
+
+````java
+@EnableDynamoDBRepositories(basePackageClasses = VisitLogRepository.class)
+public class DynamoDBConfig {
+    // ...
+}
+````
+
+
 ### 5. Use Repository in application Code
 
-For easier integration additionall we can create a `VisitLogService`, that acts as the logic layer for interacting with the Table:
+For easier integration additional we can create a `VisitLogService`, that acts as the logic layer for interacting with the Table:
 
 
 ```java

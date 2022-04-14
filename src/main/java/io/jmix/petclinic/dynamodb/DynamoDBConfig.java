@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Primary;
 @EnableDynamoDBRepositories(basePackageClasses = VisitLogRepository.class)
 public class DynamoDBConfig {
 
-
 	@Primary
 	@Bean
 	public DynamoDBMapperConfig dynamoDBMapperConfig() {
